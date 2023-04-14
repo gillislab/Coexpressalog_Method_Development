@@ -17,7 +17,9 @@ species = {'maize':'Zea mays',
            }
 stringent = {'moderate':'Moderate','lenient':'Lenient','stringent':'Stringent'}
 #choices = {"a": "Choice A", "b": "Choice B"}
-all_files_in_folder = os.listdir('/data/passala/Coexpressolog_paper_data/Species_species_gene_tables')
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+current_dir = os.getcwd()
+all_files_in_folder = os.listdir(current_dir+'/Species_species_gene_tables')
 def ui_card(title, *args):
     return (
         ui.div(
@@ -28,7 +30,46 @@ def ui_card(title, *args):
     )
 
 app_ui = ui.page_fluid(
-    ui.h1({'style':'text-align:center;'},"CPA: Coexpression Proxies for the Integration of High Dimensional Data"),
+    ui.h1({'style':'text-align:center;'},"EPIPHITES: Expression Proxies In Plants Help Integrate Transcribed Expression in Single-cell"),
+    ui.row(ui.p("\n")),
+    ui.row(ui.p("\n")),
+    ui.row(ui.p("\n")),
+    ui.row(
+        ui.column(
+            4, ui.h2({"class": "card-title m-0",'style':'text-align:center;'},'Welcome to EPIPHITES'),
+            ui.h6('Background'),
+            ui.p(
+                """
+                Integrating cross species scRNAseq data is an increasingly common challenge for plant
+                biologists seeking to answer challenging questions about cell type specific innovations critical to 
+                domestication, yield, and pathogen resistance traits. We developed EPIPHITES(Expression Proxies In Plants Help Integrate Transcribed Expression in Single-cell)
+                to facillitate this integration integration.
+                """
+                ),
+            ui.h6('Premise'),
+            ui.p(
+                """
+                We use meta-analysis from prior bulk data to define co-expression proxies that can be applied in more specific, but less well-powered, specific single cell data.
+                Although our proxies may not be 1-1 matches between species, they are similar enough to serve as proxies for integration in a high dimensional space
+                (such as cell types) and improve the integration of cross species single-cell data.
+                """
+                ),
+
+        ),
+        ui.column(
+            6,
+            ui.img(src ="expressalog_diagram_for_shiny_trimmed.png"),
+        ),
+    ),
+    ui.row(
+     ui.h6('Use'),
+     ui.p("""
+     Our proxy lists can be utilized as if they were orthologs between  two species, expanding the shared gene space traditionally operated upon by 
+     other integration methods. After aligning two expression datasets using our coexpression proxies, they can be integrated with any other integration method,
+     such as Seurat, Scanorama, or ScANVI.
+     """
+          ),
+    ),
     ui.div(
         {'class':'card mb-3'},
         ui.div(
@@ -91,7 +132,15 @@ def server(input, output, session):
             return "Species are the same, please select two different species"
         else:
             return f"Generate {input.species_1()} to {input.species_2()} table"
+        
+
+    @output
+    @render.ui
+    def images() -> ui.Tag:
+        img = ui.img(src="/data/passala/git/Coexpressalog_Method_Development/shiny_for_proxy_paper/783px-Test-Logo.svg.png",)
+        return img    
     
+
     @output
     @render.text
     def stringency_txt():
@@ -108,6 +157,6 @@ def server(input, output, session):
         spec_2_filter = [i for i in spec_1_filter if input.species_2() in i]
         final_file = [i for i in spec_2_filter if input.stringency() in i]
         current_file = final_file[0]
-        full_location = '/data/passala/Coexpressolog_paper_data/Species_species_gene_tables/'+current_file
+        full_location = current_dir+'/Species_species_gene_tables/'+current_file
         return full_location
-app = App(app_ui, server)
+app = App(app_ui, server,static_assets=current_dir+'/static_assets')
