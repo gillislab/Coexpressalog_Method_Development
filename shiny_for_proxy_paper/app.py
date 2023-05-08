@@ -66,7 +66,7 @@ app_ui = ui.page_fluid(
      ui.p("""
      Our proxy lists can be utilized as if they were orthologs between  two species, expanding the shared gene space traditionally operated upon by 
      other integration methods. After aligning two expression datasets using our coexpression proxies, they can be integrated with any other integration method,
-     such as Seurat, Scanorama, or ScANVI.
+     such as Seurat, Scanorama, or ScANVI. Our proxies are available at three stringency levels. Higher stringency levels require the genes to be more similar to eachother to be included.
      """
           ),
     ),
