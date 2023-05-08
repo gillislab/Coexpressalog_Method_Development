@@ -2,10 +2,10 @@
     "https://api.shinyapps.io": {
         "server_url": "https://api.shinyapps.io",
         "filename": "/data/passala/git/Coexpressalog_Method_Development/shiny_for_proxy_paper",
-        "app_url": "https://mikepassal.shinyapps.io/epiphite_test/",
-        "app_id": 8834290,
+        "app_url": "https://gillislab.shinyapps.io/epiphites/",
+        "app_id": 9058788,
         "app_guid": null,
-        "title": "EPIPHITE_Test",
+        "title": "Epiphites",
         "app_mode": "python-shiny"
     }
 }
