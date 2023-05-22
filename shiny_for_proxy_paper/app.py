@@ -118,6 +118,8 @@ app_ui = ui.page_fluid(
             ),
         ),
     ),
+    ui.row(ui.h6('Funding and Support')),
+    ui.row(ui.p('This material is based upon work supported by the National Science Foundation under Grant Numbers NSF IOS-1934388 and NSF IOS-2216612.'))
 )
 
 #    ui.output_text_verbatim("txt"),
